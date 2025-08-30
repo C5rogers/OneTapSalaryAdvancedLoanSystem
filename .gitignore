@@ -1,0 +1,8 @@
+.bin
+.env.*
+!.env.sample
+trash
+*.pem
+bin
+keys
+.env

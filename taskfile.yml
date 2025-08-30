@@ -1,0 +1,45 @@
+version: "3"
+
+dotenv: [".env"]
+
+tasks:
+  "generate:keys":
+    cmds:
+      - mkdir -p ./keys
+      - cd ./keys && openssl ecparam -genkey -name prime256v1 -noout -out jwt.key
+      - cd ./keys && openssl ec -in jwt.key -pubout -out jwt.pub.pem
+      - cd ./keys && awk 'NF {printf "%s\\n", $0}' jwt.pub.pem | sed '$ s/\\n$//' > jwt.pub.singleline
+      - cd ./keys && awk 'NF {printf "%s\\n", $0}' jwt.key | sed '$ s/\\n$//' > jwt.priv.singleline
+
+  compose:
+    dotenv: [".env"]
+    cmds:
+      - docker compose -f docker-compose-local.yml {{.CLI_ARGS}}
+
+  server:
+    cmds:
+      - "cd ./server && go run ./cmd/server"
+
+  "server:init":
+    cmds:
+      - cd ./server && go mod init  {{.CLI_ARGS}}
+
+  "server:tidy":
+    cmds:
+      - cd ./server && go mod tidy
+
+  "server:get":
+    cmds:
+      - cd ./server && go get {{.CLI_ARGS}}
+
+  "configs":
+    cmds:
+      - echo "local console port      - $TASK_LOCAL_CONSOLE_PORT"
+      - echo "local api port          - $TASK_LOCAL_API_PORT"
+      - echo "staging console port    - $TASK_STAGING_CONSOLE_PORT"
+      - echo "staging api port        - $TASK_STAGING_API_PORT"
+      - echo "production console port - $TASK_PRODUCTION_CONSOLE_PORT"
+      - echo "production api port     - $TASK_PRODUCTION_API_PORT"
+  "log_go":
+    cmds:
+      - docker logs -f $COMPOSE_PROJECT_NAME-golang-server --tail=10
