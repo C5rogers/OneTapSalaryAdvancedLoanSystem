@@ -6,7 +6,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func CreateHasuraAccessToken(privateKey string, claims map[string]interface{}) (string, error) {
+func CreateAuthAccessToken(privateKey string, claims map[string]interface{}) (string, error) {
 
 	mapClaims := jwt.MapClaims(claims)
 

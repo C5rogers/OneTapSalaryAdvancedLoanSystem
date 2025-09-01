@@ -1,4 +1,4 @@
-package models
+package payloads
 
 type FileUploadPayload struct {
 	Files []struct {

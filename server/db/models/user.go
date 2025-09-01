@@ -7,9 +7,11 @@ import (
 
 type User struct {
 	gorm.Model
-	Email    string `gorm:"uniqueIndex;not null" json:"email"`
-	Password string `gorm:"not null" json:"-"`
-	Role     string `gorm:"not null" json:"role"`
+	Email       string `gorm:"uniqueIndex;not null" json:"email"`
+	FullName    string `gorm:"not null" json:"full_name"`
+	PhoneNumber string `gorm:"uniqueIndex;not null" json:"phone_number"`
+	Password    string `gorm:"not null" json:"-"`
+	Role        string `gorm:"not null" json:"role"`
 }
 
 func (u *User) SetPassword(password string) error {

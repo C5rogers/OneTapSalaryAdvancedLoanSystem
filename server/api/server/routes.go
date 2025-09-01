@@ -11,11 +11,10 @@ func (s *Server) ApplyRoutes(mux *http.ServeMux) {
 
 	mux.HandleFunc("POST /auth/login", MakeAPI(s.HandleLogin))
 
-	mux.HandleFunc("POST /auth/signup", MakeAPI(s.HandleSignup))
+	mux.HandleFunc("POST /auth/register", MakeAPI(s.HandleRegister))
 
 	mux.HandleFunc("POST /api/file_upload", MakeAPI(s.HandleFileUpload))
 
-	mux.HandleFunc("POST /api/payment_link", MakeAPI(s.HandlePaymentInChapa))
 }
 
 func MakeAPI(h func(http.ResponseWriter, *http.Request) error) http.HandlerFunc {

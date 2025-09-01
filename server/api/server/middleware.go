@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	jwt_auth "github.com/c5rogers/one-tap/salary-advance-loan-system/internal/jwt-auth"
-	"github.com/c5rogers/one-tap/salary-advance-loan-system/models"
+	"github.com/c5rogers/one-tap/salary-advance-loan-system/payloads"
 	"github.com/c5rogers/one-tap/salary-advance-loan-system/utils"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -44,7 +44,7 @@ func (s *Server) ExtractUserFromToken(next http.Handler) http.Handler {
 			return
 		}
 
-		claims := &models.UserClaims{}
+		claims := &payloads.UserClaims{}
 
 		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodECDSA); !ok {

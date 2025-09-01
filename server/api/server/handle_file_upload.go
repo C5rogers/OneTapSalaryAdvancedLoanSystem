@@ -5,7 +5,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/c5rogers/one-tap/salary-advance-loan-system/models"
+	"github.com/c5rogers/one-tap/salary-advance-loan-system/payloads"
 	"github.com/c5rogers/one-tap/salary-advance-loan-system/utils"
 )
 
@@ -16,7 +16,7 @@ func (s *Server) HandleFileUpload(w http.ResponseWriter, r *http.Request) error 
 		return utils.SendErrorResponse(w, "invalid payload", "invalid_payload", http.StatusBadRequest)
 	}
 
-	payload := models.FileUploadPayload{}
+	payload := payloads.FileUploadPayload{}
 	err = json.Unmarshal(reqBody, &payload)
 	if err != nil {
 		return utils.SendErrorResponse(w, "invalid payload", "invalid_payload", http.StatusBadRequest)

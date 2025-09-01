@@ -6,20 +6,20 @@ import (
 	"encoding/base64"
 	"strings"
 
+	"github.com/c5rogers/one-tap/salary-advance-loan-system/payloads"
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/google/uuid"
-	"github.com/c5rogers/one-tap/salary-advance-loan-system/models"
 )
 
-func (cloudinaryClient *CloudinaryClient) UploadFile(fileUploadInput models.FileUploadPayload) ([]models.FileOutputs, error) {
+func (cloudinaryClient *CloudinaryClient) UploadFile(fileUploadInput payloads.FileUploadPayload) ([]payloads.FileOutputs, error) {
 
-	var fileUploadOutputs []models.FileOutputs
+	var fileUploadOutputs []payloads.FileOutputs
 
 	for _, file := range fileUploadInput.Files {
 		fileString := strings.Split(file.Base64, "base64,")
 		decodedData, err := base64.StdEncoding.DecodeString(fileString[1])
 		if err != nil {
-			return []models.FileOutputs{}, err
+			return []payloads.FileOutputs{}, err
 		}
 
 		constructedName := generateUUID()
@@ -30,7 +30,7 @@ func (cloudinaryClient *CloudinaryClient) UploadFile(fileUploadInput models.File
 		if err != nil {
 			return nil, err
 		}
-		fileUploadOutputs = append(fileUploadOutputs, models.FileOutputs{
+		fileUploadOutputs = append(fileUploadOutputs, payloads.FileOutputs{
 			SecureURL: uploadResult.SecureURL,
 			URL:       uploadResult.URL,
 		})
