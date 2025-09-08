@@ -13,6 +13,10 @@ func (s *Server) ApplyRoutes(mux *http.ServeMux) {
 
 	mux.HandleFunc("POST /auth/register", MakeAPI(s.HandleRegister))
 
+	mux.HandleFunc("POST /api/validate_customers", MakeAPI(s.HandleValidateCustomers))
+
+	mux.HandleFunc("POST /api/process_transactions", MakeAPI(s.HandleProcessTransaction))
+
 	mux.HandleFunc("POST /api/file_upload", MakeAPI(s.HandleFileUpload))
 
 }

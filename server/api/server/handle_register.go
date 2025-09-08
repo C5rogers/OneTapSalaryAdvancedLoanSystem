@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 
@@ -9,9 +10,8 @@ import (
 	"github.com/c5rogers/one-tap/salary-advance-loan-system/payloads"
 	"github.com/c5rogers/one-tap/salary-advance-loan-system/utils"
 	"github.com/go-playground/validator/v10"
+	"gorm.io/gorm"
 )
-
-var validate = validator.New()
 
 func (s *Server) HandleRegister(w http.ResponseWriter, r *http.Request) error {
 	reqBody, err := io.ReadAll(r.Body)
@@ -35,10 +35,11 @@ func (s *Server) HandleRegister(w http.ResponseWriter, r *http.Request) error {
 
 	registeringUser, err := s.DB.FindUserByEmail(userEmail)
 	if err != nil {
-		if err.Error() == "record not found" {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return utils.SendErrorResponse(w, "Unauthorized", "unauthorized", http.StatusBadRequest)
+		} else {
+			return utils.SendErrorResponse(w, "error checking user", "database_error", http.StatusInternalServerError)
 		}
-		return utils.SendErrorResponse(w, "error checking user", "database_error", http.StatusInternalServerError)
 	}
 
 	if registeringUser == nil || registeringUser.Role != "admin" || registeringUser.Role != userRole {

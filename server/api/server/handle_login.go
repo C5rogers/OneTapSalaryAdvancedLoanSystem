@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"time"
@@ -9,11 +10,18 @@ import (
 	"github.com/c5rogers/one-tap/salary-advance-loan-system/db/models"
 	jwt_auth "github.com/c5rogers/one-tap/salary-advance-loan-system/internal/jwt-auth"
 	"github.com/c5rogers/one-tap/salary-advance-loan-system/payloads"
+	"github.com/c5rogers/one-tap/salary-advance-loan-system/security"
 	"github.com/c5rogers/one-tap/salary-advance-loan-system/utils"
 	"github.com/go-playground/validator/v10"
+	"gorm.io/gorm"
 )
 
 func (s *Server) HandleLogin(w http.ResponseWriter, r *http.Request) error {
+
+	ip := security.GetIP(r.RemoteAddr)
+	if !s.RateLimiter.Allow(ip) {
+		return utils.SendErrorResponse(w, "too many requests", "rate_limit_exceeded", http.StatusTooManyRequests)
+	}
 
 	reqBody, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -34,10 +42,12 @@ func (s *Server) HandleLogin(w http.ResponseWriter, r *http.Request) error {
 
 	user, err := s.DB.FindUserByEmail(payload.Email)
 	if err != nil {
-		if err.Error() == "record not found" {
+
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return utils.SendErrorResponse(w, "username or password incorrect", "bad_credentials", http.StatusBadRequest)
+		} else {
+			return utils.SendErrorResponse(w, "error retrieving user", "database_error", http.StatusInternalServerError)
 		}
-		return utils.SendErrorResponse(w, "error retrieving user", "database_error", http.StatusInternalServerError)
 	}
 
 	if user == nil {

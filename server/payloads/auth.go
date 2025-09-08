@@ -1,6 +1,9 @@
 package payloads
 
-import "github.com/go-playground/validator/v10"
+import (
+	"github.com/c5rogers/one-tap/salary-advance-loan-system/db/models"
+	"github.com/go-playground/validator/v10"
+)
 
 type RegisterPayload struct {
 	Email       string `json:"email" validate:"required,email"`
@@ -26,6 +29,20 @@ type AccessTokenOutput struct {
 	AccessToken string `json:"access_token"`
 }
 
+type Result struct {
+	Customer models.Customer `json:"customer"`
+	Rating   RatingBreakdown `json:"rating"`
+}
+
+type ValidateCustomerOutput struct {
+	ValidCustomerLogs   []models.ValidationLog `json:"valid_customer_logs"`
+	RegisteredCustomers []models.Customer      `json:"registered_customers"`
+	InvalidCustomerLogs []models.ValidationLog `json:"invalid_customer_logs"`
+}
+
+type ProcessTransactionsOutput struct {
+	Ratings []Result `json:"ratings"`
+}
 type RegisterOutput struct {
 	Message string `json:"message"`
 }

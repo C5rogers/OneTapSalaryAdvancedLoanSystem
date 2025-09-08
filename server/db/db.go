@@ -28,7 +28,7 @@ func NewClient(config *config.Config) (*Database, error) {
 		return nil, err
 	}
 
-	if err := db.AutoMigrate(&models.User{}, &models.Customer{}); err != nil {
+	if err := db.AutoMigrate(&models.User{}, &models.Customer{}, &models.Transaction{}); err != nil {
 		log.Fatal("migration failed:", err)
 	}
 
