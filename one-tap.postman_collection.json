@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "6e76567e-a218-4c6c-b28e-1acb0b6ec328",
+		"name": "one-tap",
+		"description": "this is the api collection of the Salary Advance Loan Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26589588"
+	},
+	"item": [
+		{
+			"name": "Authenticated",
+			"item": [
+				{
+					"name": "Api",
+					"item": [
+						{
+							"name": "Validate_Customer",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://host.docker.internal:9180/api/validate_customers",
+									"protocol": "http",
+									"host": [
+										"host",
+										"docker",
+										"internal"
+									],
+									"port": "9180",
+									"path": [
+										"api",
+										"validate_customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Process_Transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"natenaelhaylemariam@gmail.com\",\n    \"password\": \"@Natiman123\"\n}"
+								},
+								"url": {
+									"raw": "http://host.docker.internal:9180/api/process_transactions",
+									"protocol": "http",
+									"host": [
+										"host",
+										"docker",
+										"internal"
+									],
+									"port": "9180",
+									"path": [
+										"api",
+										"process_transactions"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "this is the business logic required to validate customers under \\`api/validate_customer\\` api route and also process transaction and rating logic too under \\`api/process_transaction\\` api route"
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"email\":\"test@test.com\",\n \"password\":\"Test123\",\n \"full_name\":\"Test User\",\n \"phone_number\":\"0988332211\",\n \"role\":\"user\"  \n}"
+						},
+						"url": {
+							"raw": "http://host.docker.internal:9180/auth/register",
+							"protocol": "http",
+							"host": [
+								"host",
+								"docker",
+								"internal"
+							],
+							"port": "9180",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "this is the collection of api that only authenticated users can access",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJuYXRlbmFlbGhheWxlbWFyaWFtQGdtYWlsLmNvbSIsImVtYWlsIjoibmF0ZW5hZWxoYXlsZW1hcmlhbUBnbWFpbC5jb20iLCJleHAiOjE3NTc5NTc5NzksImZ1bGxOYW1lIjoiTmF0ZW5hZWwgSGF5bGVtYXJpYW0iLCJpYXQiOjE3NTc2OTg3NzksImlzcyI6Imh0dHBzOi8vb25lLXRhcC5iYWNrZW5kLmNvbSIsIm1ldGFkYXRhIjp7IngtYXV0aC1hbGxvd2VkLXJvbGVzIjpbImFkbWluIl0sIngtYXV0aC1kZWZhdWx0LXJvbGUiOiJhZG1pbiIsIngtYXV0aC1yb2xlIjoiYWRtaW4iLCJ4LWF1dGgtdXNlci1pZCI6Im5hdGVuYWVsaGF5bGVtYXJpYW1AZ21haWwuY29tIn0sInBob25lX251bWJlciI6IjA5MzkyMDkxNjYiLCJzdWIiOiJuYXRlbmFlbGhheWxlbWFyaWFtQGdtYWlsLmNvbSJ9.2jUrYdDqgDZVkJxmgWrfVSjjLiDVFtMzUHNHVL9upaXJR228zXF4JixURPZKrorKpdk1ZWxqXJUg9-Ikb1iejg",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"natenaelhaylemariam@gmail.com\",\n    \"password\": \"@Natiman123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://host.docker.internal:9180/auth/login",
+					"protocol": "http",
+					"host": [
+						"host",
+						"docker",
+						"internal"
+					],
+					"port": "9180",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

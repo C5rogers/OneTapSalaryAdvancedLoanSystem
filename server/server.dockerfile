@@ -16,5 +16,8 @@ WORKDIR /app
 
 COPY --from=build /app/main /app/
 
+COPY ./data /app/data 
+
+
 
 CMD ["./main"]
