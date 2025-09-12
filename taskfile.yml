@@ -32,6 +32,10 @@ tasks:
     cmds:
       - cd ./server && go get {{.CLI_ARGS}}
 
+  "server:test":
+    cmds:
+      - "cd ./server && go test -v ./tests"
+
   "configs":
     cmds:
       - echo "local console port      - $TASK_LOCAL_CONSOLE_PORT"
