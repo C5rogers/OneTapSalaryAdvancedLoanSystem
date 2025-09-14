@@ -22,12 +22,20 @@ task compose -- restart
 task compose -- down
 ```
 
-**To run server:**
+**To run server on local development mode:**
 
 the following will do cd into server and run main.go
 
 ```
 task server
+```
+
+**To run unit test:**
+
+the following will do cd into server and run all unit tests
+
+```
+task server:test
 ```
 
 # How Validation Works
