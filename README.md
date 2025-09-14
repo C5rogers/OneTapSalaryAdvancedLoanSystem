@@ -12,6 +12,14 @@ take a look at `.env.sample`
 
 rename `dotenv: ['.env.sample']` to `dotenv: ['.env']` to start using it locally.
 
+**Setup PUBLIC & PRIVATE keys**
+
+run the following command to generate private and public keys of `ES256` algorithm used to generate access tokens for autnentication module
+
+```
+task generate:keys
+```
+
 **Run Docker Compose:**
 to run docker compose commands do the following
 
