@@ -3,7 +3,6 @@ package server
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -49,7 +48,6 @@ func (s *Server) HandleValidateCustomers(w http.ResponseWriter, r *http.Request)
 
 	logs, validCustomers, err := utils.ValidateCustomers("data/customers.json", "sample_customers.csv")
 	if err != nil {
-		fmt.Println("error validating customers:", err)
 		return utils.SendErrorResponse(w, "error validating customers: "+err.Error(), "validation_error", http.StatusInternalServerError)
 	}
 
